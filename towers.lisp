@@ -568,12 +568,18 @@
 (defmethod glut:motion ((w game-window) x y)
   (let ((*world* (world w)))
     (multiple-value-bind (x y) (glu:un-project x y 0.0)
+      #+darwin
+      (vec-assign (pos (mouse w)) (+ 100 (* 2.0 x)) (- -100 (* 2.0 y)))
+      #-darwin
       (vec-assign (pos (mouse w)) x (- y)))
     (select (selection (mouse w)) :move (pos (mouse w)))))
 
 (defmethod glut:passive-motion ((w game-window) x y)
   (let ((*world* (world w)))
     (multiple-value-bind (x y) (glu:un-project x y 0.0)
+      #+darwin
+      (vec-assign (pos (mouse w)) (+ 100 (* 2.0 x)) (- -100 (* 2.0 y)))
+      #-darwin
       (vec-assign (pos (mouse w)) x (- y)))))
 
 (defgeneric left-button (state mouse selected-object picked-object)
