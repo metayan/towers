@@ -640,6 +640,10 @@
     (gl:with-pushed-matrix
       (gl:load-identity)
       (gl:raster-pos x y)
+      #+darwin
+      (loop for char across string do
+        (glut:bitmap-character glut:+bitmap-helvetica-18+ (char-code char)))
+      #-darwin
       (glut:bitmap-string glut:+bitmap-8-by-13+ string))))
 
 
